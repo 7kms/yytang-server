@@ -17,6 +17,7 @@
     "multer": "^1.2.0"
   },
   "devDependencies": {
+    "eslint": "^3.12.1",
     "nodemon": "^1.11.0"
   }
 }
