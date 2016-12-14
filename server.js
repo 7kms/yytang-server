@@ -1,17 +1,26 @@
 const config = require('./config')
+var cors = require('cors')
 var app = require('express')()
 var session = require('express-session')
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 if(config.setting.cross) {
-  app.use(require('./util/cross'))
+  app.use(cors({
+    credentials: true
+  }))
 }
 
 app.use(cookieParser())
-app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
+
 // Use the session middleware 
-app.use(session({ secret: 'yytang-server', cookie: { maxAge: 15*60*1000 }}))
+app.use(session({ 
+    secret: 'yytang-server',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 15*60*1000 }
+  }))
 
 app.use('/', require('./routes/main'))
 app.use('/user', require('./routes/user'))
