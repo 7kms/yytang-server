@@ -18,7 +18,8 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(session({ 
     secret: 'yytang-server',
     resave: false,
-    saveUninitialized: false,
+    rolling: true,
+    saveUninitialized: true,
     cookie: { maxAge: 15*60*1000 }
   }))
 
