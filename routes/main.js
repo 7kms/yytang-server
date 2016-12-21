@@ -11,11 +11,12 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
+  console.log(req.body)
   if(req.body.account == userInfo.account && req.body.password == userInfo.password){
       req.session.userID = userInfo.id
       res.status(200).json({msg:'login success'})
   }else{
-      res.status(200).json({msg:'login fail'})
+      res.status(400).json({msg:'用户名或者密码错误!'})
   }
 })
 
