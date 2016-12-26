@@ -28,7 +28,7 @@ app.use(session({
     cookie: { maxAge: 15*60*1000 }
   }))
 
-app.use('/', require('./routes/main'))
+app.use('/public', require('./routes/public'))
 app.use('/user', require('./routes/user'))
 
 
