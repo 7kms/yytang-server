@@ -6,7 +6,12 @@ var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 if(config.setting.cross) {
   app.use(cors({
-    credentials: true
+    credentials: true,
+    origin: function(origin, callback) {
+      var originIsWhitelisted = config.setting.whiteList.indexOf(origin) !== -1;
+      console.log(origin)
+      callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted);
+    }
   }))
 }
 

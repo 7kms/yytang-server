@@ -2,6 +2,7 @@ var path = require('path')
 module.exports = {
     port: 443,
     cross: true,
+    whiteList: ['http://localhost:3456'],
     ssl:{
         active: true,
         key: path.resolve(__dirname,'cert/yytang-key.pem'),
