@@ -8,9 +8,12 @@ if(config.setting.cross) {
   app.use(cors({
     credentials: true,
     origin: function(origin, callback) {
-      var originIsWhitelisted = config.setting.whiteList.indexOf(origin) !== -1;
-      console.log(origin)
-      callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted);
+      if(origin){
+        var originIsWhitelisted = config.setting.whiteList.indexOf(origin) !== -1;
+        callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted);
+      }else{
+        callback(null, true);
+      }
     }
   }))
 }
