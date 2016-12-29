@@ -4,7 +4,10 @@ var https = require('https');
 var querystring = require('querystring');
 var headers = {
       'X-LC-Id': config.applicationId,
-      'X-LC-Sign': sign(config.applicationKey)
+      'X-LC-Sign': sign(config.applicationKey),
+      'X-LC-UA': 'AV/js1.5.0',
+      'Origin': 'https://gold.xitu.io',
+      'Referer': 'https://gold.xitu.io'
   };
 var baseOptions = {
   hostname: 'api.leancloud.cn',
@@ -68,8 +71,11 @@ function sendData(opt){
     })
     return promise;
 }
-
+function refreshHeader(){
+    headers['X-LC-Sign'] = sign(config.applicationKey);
+}
 module.exports = {
     get: get,
-    post: post
+    post: post,
+    refreshHeader: refreshHeader
 }
