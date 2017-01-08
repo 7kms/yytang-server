@@ -74,8 +74,12 @@ function sendData(opt){
 function refreshHeader(){
     headers['X-LC-Sign'] = sign(config.applicationKey);
 }
+function addHeaderItem(header){
+    headers = Object.assing(headers, header);
+}
 module.exports = {
     get: get,
     post: post,
-    refreshHeader: refreshHeader
+    refreshHeader: refreshHeader,
+    addHeaderItem
 }

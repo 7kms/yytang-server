@@ -55,7 +55,7 @@ if (app.get('env') === 'development') {
 // 生产环境下的错误处理
 // 不会向用户显示堆栈信息
 app.use(function(err, req, res, next) {
- res.status(err.status || 500).json({code:err.status || 500,msg:'Not Found'}); 
+ res.status(err.status || 500).json(err); 
 });
 
 config.create(app, ()=>{

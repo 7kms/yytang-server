@@ -1,19 +1,18 @@
 const router = require('express').Router()
 const author = require('./authority')
-var $api = require('./juejin/api');
+const nuggets = require('./nuggets')
 
 var userInfo = {};
 router.post('/login',(req,res,next)=>{
-    $api.refreshHeader();
-    console.log({mobilePhoneNumber:req.body.account,password:req.body.password})
-    $api.post('/1.1/login',{mobilePhoneNumber: req.body.account,password:req.body.password})
-    .then(data => {
-        req.session.userID = data.objectId;
-        userInfo = data;
-        res.status(200).json(data);
-    },error => {
-        res.status(500).send(error);
-    })
+     let {account:mobilePhoneNumber, password} = req.body;
+     nuggets.login({mobilePhoneNumber,password})
+     .then(data => {
+         req.session.userID = data.objectId;
+         userInfo = data;
+         res.status(200).json(data);
+     },error => {
+         res.status(500).send(error);
+     })
 })
 
 router.use(author)
