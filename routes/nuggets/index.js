@@ -2,7 +2,7 @@ var $api = require('./api');
 module.exports = {
     discover(paramObj){
         var promise = new Promise((resolve, reject) => {
-             $api.get('/1.1/classes/Entry',paramObj)
+             $api.get('/classes/Entry',paramObj)
             .then(data => {
                 resolve(data);
             },error => {
@@ -14,7 +14,7 @@ module.exports = {
     login(paramObj){
         $api.refreshHeader();
         var promise = new Promise((resolve, reject) => {
-            $api.post('/1.1/login',paramObj)
+            $api.post('/login',paramObj)
             .then(data => {
                 resolve(data);
             },error => {

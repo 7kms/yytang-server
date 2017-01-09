@@ -23,8 +23,11 @@ function sign(key) {
     var signature = md5.digest('hex')+ ',' + timestamp
     return signature
 }
-function get(path, params){    
-    path += '?' + querystring.stringify(params)
+function basePath(path){
+    return `/${config.version}${path}`;
+}
+function get(path, params){
+    path = basePath(path) + '?' + querystring.stringify(params)
     var opt = Object.assign({}, baseOptions, {method:'GET',path:path});
     var promise = new Promise((resolve, reject)=>{
         var sendPromise = sendData(opt);
@@ -38,7 +41,7 @@ function get(path, params){
 }
 
 function post(path, params){
-    path += '?' + querystring.stringify(params)
+    path = basePath(path) + '?' + querystring.stringify(params)
     var opt = Object.assign({}, baseOptions, {method:'POST',path:path});
     var promise = new Promise((resolve, reject)=>{
         var sendPromise = sendData(opt);
