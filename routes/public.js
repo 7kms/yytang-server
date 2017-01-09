@@ -6,7 +6,7 @@ router.get('/discover',(req, res, next) => {
     .then(data=>{
         res.status(200).json(data);
     },error=>{
-        res.status(500).send(data);
+        res.status(500).send(error);
     });
 });
 
