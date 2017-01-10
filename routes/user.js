@@ -29,4 +29,12 @@ router.post('/loginout', (req, res, next) => {
         }
     })
 })
+router.get('/subscribe',(req, res, next) => {
+    nuggets.subscribe(req.query)
+    .then(data=>{
+        res.status(200).json(data);
+    },error=>{
+        res.status(500).send(error);
+    });
+});
 module.exports = router

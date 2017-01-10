@@ -14,7 +14,7 @@ var baseOptions = {
   port: 443,
   path: '/1.1/classes/Entry',
   method: 'GET',
-  headers: headers
+  headers
 };
 function sign(key) {
     var timestamp = Date.now()
@@ -78,7 +78,7 @@ function refreshHeader(){
     headers['X-LC-Sign'] = sign(config.applicationKey);
 }
 function addHeaderItem(header){
-    headers = Object.assing(headers, header);
+    headers = Object.assign(headers, header);
 }
 module.exports = {
     get: get,
