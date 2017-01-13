@@ -31,5 +31,15 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    column(paramObj){
+        return new Promise((resolve, reject) => {
+            $api.get('/classes/Entry',paramObj)
+            .then(data => {
+                resolve(data);
+            },error => {
+                reject(error);
+            });
+        });
     }
 }
