@@ -2,6 +2,7 @@ const router = require('express').Router()
 const author = require('./authority')
 const nuggets = require('./nuggets')
 const resData = require('../util/resData')
+const userCtrl = require('../app/controllers/users')
 
 var userInfo = {};
 router.post('/login',(req,res,next)=>{
@@ -15,6 +16,8 @@ router.post('/login',(req,res,next)=>{
          res.status(500).send(error);
      })
 })
+
+router.post('/register',userCtrl.create)
 
 router.use(author)
 router.get('/info', (req, res, next) =>{

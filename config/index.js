@@ -1,4 +1,6 @@
 const setting = require('./setting')
+const express = require('./express')
+const routes = require('./routes')
 var fs = require('fs');
 function setup (ssl) {
    if (ssl && ssl.active) {
@@ -22,5 +24,7 @@ module.exports = {
           cb && cb()
       });
    },
-   setting
+   setting,
+   express,
+   routes
 }

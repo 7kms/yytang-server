@@ -1,63 +1,41 @@
+const mongoose = require('mongoose')
 const config = require('./config')
-var cors = require('cors')
+const fs = require('fs')
+const path = require('path')
+const modelDir = path.join(__dirname,'app/models')
 var app = require('express')()
-var session = require('express-session')
-var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
-if(config.setting.cross) {
-  app.use(cors({
-    credentials: true,
-    origin: function(origin, callback) {
-      if(origin){
-        var originIsWhitelisted = config.setting.whiteList.indexOf(origin) !== -1;
-        callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted);
-      }else{
-        callback(null, true);
-      }
-    }
-  }))
+
+// Bootstrap models
+fs.readdirSync(modelDir)
+  .filter(file => ~file.search(/^[^\.].*\.js$/))
+  .forEach(file => require(path.join(modelDir, file)));
+
+config.express(app);
+config.routes(app);
+
+connect()
+  .on('error', console.log)
+  .on('disconnected', ()=>{
+    console.log('connect error')
+  })
+  .once('open', listen);
+
+function listen () {
+  config.create(app, ()=>{
+      console.log('server is runnging')
+  })
 }
 
-app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(bodyParser.json()); // for parsing application/json
-
-// Use the session middleware 
-app.use(session({ 
-    secret: 'yytang-server',
-    resave: false,
-    rolling: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 15*60*1000 }
-  }))
-
-app.use('/public', require('./routes/public'))
-app.use('/user', require('./routes/user'))
-
-
-// 捕获404并定向到错误处理
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// 错误处理
-// 开发环境下的错误处理
-// 会输出堆栈信息
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    // 设置响应状态
-    res.status(err.status || 500).json({code:err.status || 500,error:err}); 
-  });
+function connect () {
+  // var options = { server: { socketOptions: { keepAlive: 1 } } };
+  let config = {
+    db: 'mongodb://127.0.0.1/tq'
+  };
+  var options = {
+    db: { native_parser: true },
+    server: { poolSize: 5 },
+    user: 'tanqiang',
+    pass: '111111'
+  };
+  return mongoose.connect(config.db, options).connection;
 }
-
-// 生产环境下的错误处理
-// 不会向用户显示堆栈信息
-app.use(function(err, req, res, next) {
- res.status(err.status || 500).json(err); 
-});
-
-config.create(app, ()=>{
-    console.log('server is runnging')
-})
