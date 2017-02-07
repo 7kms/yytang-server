@@ -29,7 +29,7 @@ router.post('/loginout', (req, res, next) => {
         if(!err) {
             res.status(200).json(resData(200, {msg:'退出登录'}))
         }else {
-            res.status(400).json(resData(200, {msg:'退出失败'}))
+            res.status(200).json(resData(400, {msg:'退出失败'}))
         }
     })
 })
