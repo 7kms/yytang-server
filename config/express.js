@@ -3,7 +3,8 @@ var cors = require('cors')
 var session = require('express-session')
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
-
+var formidable = require('formidable')
+var util = require('util')
 module.exports = function (app) {
     if(setting.cross) {
         app.use(cors({
@@ -31,4 +32,13 @@ module.exports = function (app) {
         saveUninitialized: true,
         cookie: { maxAge: 15*60*1000 }
     }))
+    app.post('/upload',function(req, res){
+        console.log('comming')
+        var form = new formidable.IncomingForm();
+        form.parse(req, function(err, fields, files) {
+            res.writeHead(200, {'content-type': 'text/plain'});
+            res.write('received upload:\n\n');
+            res.end(util.inspect({fields: fields, files: files}));
+        });
+    })
 }

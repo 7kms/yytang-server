@@ -4,7 +4,7 @@ module.exports = {
     cross: true,
     whiteList: ['http://localhost:3456','htts://localhost'],
     ssl:{
-        active: true,
+        active: false,
         key: path.resolve(__dirname,'cert/yytang-key.pem'),
         certificate: path.resolve(__dirname,'cert/yytang-cert.pem')
     }

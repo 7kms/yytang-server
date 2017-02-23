@@ -10,8 +10,8 @@ exports.create = co.wrap(function* (req, res){
     try {
         // user.password = req.body.password;
         yield user.save();
-        var info = yield User.load({email: req.body.email});
-        res.status(200).json(resData(200, info));
+        // var info = yield User.load({email: req.body.email});
+        res.status(200).json(resData(200, user));
     } catch (error) {
         res.status(500).send(error);
     }

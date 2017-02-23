@@ -12,10 +12,10 @@ fs.readdirSync(modelDir)
 
 config.express(app);
 config.routes(app);
-
 connect()
   .on('error', console.log)
   .on('disconnected', ()=>{
+    listen()
     console.log('connect error')
   })
   .once('open', listen);
