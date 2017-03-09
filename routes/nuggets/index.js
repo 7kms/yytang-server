@@ -41,5 +41,34 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getUser(){
+       
+        return new Promise((resolve, reject) => {
+        $api.get('/classes/Comment?&where={"entry":{"__type":"Pointer","className":"Entry","objectId":"58c01380da2f6019f62fd774"}}&include=user,reply.user&limit=100&skip=0&order=-likesCount')
+            .then(data => {
+                resolve(data);
+            },error => {
+                reject(error);
+            });
+        });
+    },
+    like(obj){
+        return new Promise((resolve, reject) => {
+            //xt 551d6923e4b0cd5b623f54da //584ccdd40ce463005c5a36e3
+            $api.post('/classes/CommentLike',{
+                            "comment":{"__type":"Pointer","className":"Comment","objectId":obj.cId},
+                            "user":{"__type":"Pointer","className":"_User","objectId":"551d6923e4b0cd5b623f54da"}
+                        })
+        //     $api.post('/classes/CommentLike',{
+        //     "comment":{"__type":"Pointer","className":"Comment","objectId":"58c14836128fe1006b2306b9"},
+        //     "user":{"__type":"Pointer","className":"_User","objectId":obj.uId}
+        // })
+            .then(data => {
+                resolve(data);
+            },error => {
+                reject(error);
+            });
+        });
     }
 }
