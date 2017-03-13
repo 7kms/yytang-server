@@ -41,6 +41,7 @@ function get(path, params){
 }
 
 function post(path, params){
+    // path = basePath(path) + '?' + querystring.stringify(params)
     path = basePath(path);
     var opt = Object.assign({}, baseOptions, {method:'POST',path:path});
     var promise = new Promise((resolve, reject)=>{
@@ -54,11 +55,11 @@ function post(path, params){
     return promise;
 }
 
-function sendData(opt, postData){
+function sendData(opt, postParams){
     var promise = new Promise((resolve,reject)=>{
         var req = https.request(opt, res => {
-            console.log('statusCode:', res.statusCode);
-            console.log('headers:', res.headers);
+            // console.log('statusCode:', res.statusCode);
+            // console.log('headers:', res.headers);
             var data = '';
             res.on('data', (d) => {
                 data += d;
@@ -68,7 +69,7 @@ function sendData(opt, postData){
             })
         });
         if(opt.method == 'POST'){
-            req.write(JSON.stringify(postData));
+             req.write(JSON.stringify(postParams));
         }
         req.on('error', (e) => {
             reject(e);
