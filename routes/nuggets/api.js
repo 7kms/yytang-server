@@ -6,8 +6,8 @@ var headers = {
       'X-LC-Id': config.applicationId,
       'X-LC-Sign': sign(config.applicationKey),
       'X-LC-UA': 'AV/js1.5.0',
-      'Origin': 'https://gold.xitu.io',
-      'Referer': 'https://gold.xitu.io'
+      'Origin': 'https://juejin.im',
+    //   'Referer': 'https://gold.xitu.io'
   };
 var baseOptions = {
   hostname: 'api.leancloud.cn',
@@ -41,10 +41,10 @@ function get(path, params){
 }
 
 function post(path, params){
-    path = basePath(path) + '?' + querystring.stringify(params)
+    path = basePath(path);
     var opt = Object.assign({}, baseOptions, {method:'POST',path:path});
     var promise = new Promise((resolve, reject)=>{
-        var sendPromise = sendData(opt);
+        var sendPromise = sendData(opt,params);
         sendPromise.then(data =>{
             resolve(data);
         },error =>{
@@ -54,7 +54,7 @@ function post(path, params){
     return promise;
 }
 
-function sendData(opt){
+function sendData(opt, postData){
     var promise = new Promise((resolve,reject)=>{
         var req = https.request(opt, res => {
             console.log('statusCode:', res.statusCode);
@@ -67,6 +67,9 @@ function sendData(opt){
                 resolve(JSON.parse(data));
             })
         });
+        if(opt.method == 'POST'){
+            req.write(JSON.stringify(postData));
+        }
         req.on('error', (e) => {
             reject(e);
         });
