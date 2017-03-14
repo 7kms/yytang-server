@@ -15,7 +15,7 @@ config.routes(app);
 connect()
   .on('error', console.log)
   .on('disconnected', ()=>{
-    listen()
+    // listen()
     console.log('connect error')
   })
   .once('open', listen);
@@ -29,12 +29,12 @@ function listen () {
 function connect () {
   // var options = { server: { socketOptions: { keepAlive: 1 } } };
   let config = {
-    db: 'mongodb://127.0.0.1/tq'
+    db: 'mongodb://http://114.115.218.36/tq'
   };
   var options = {
     db: { native_parser: true },
     server: { poolSize: 5 },
-    user: 'tanqiang',
+    user: 'tq',
     pass: '111111'
   };
   return mongoose.connect(config.db, options).connection;
