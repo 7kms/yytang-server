@@ -29,7 +29,7 @@ function listen () {
 function connect () {
   // var options = { server: { socketOptions: { keepAlive: 1 } } };
   let config = {
-    db: 'mongodb://http://114.115.218.36/tq'
+    db: 'mongodb://114.115.218.36/tq'
   };
   var options = {
     db: { native_parser: true },

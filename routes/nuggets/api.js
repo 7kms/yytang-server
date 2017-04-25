@@ -7,6 +7,7 @@ var headers = {
       'X-LC-Sign': sign(config.applicationKey),
       'X-LC-UA': 'AV/js1.5.0',
       'Origin': 'https://juejin.im',
+      'Content-type':'application/json',
     //   'Referer': 'https://gold.xitu.io'
   };
 var baseOptions = {
