@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const config = require('./config')
 const fs = require('fs')
 const path = require('path')
-const modelDir = path.join(__dirname,'app/models')
+const modelDir = path.join(__dirname, 'app/models')
 var app = require('express')()
 
 
@@ -28,25 +28,26 @@ const nuggets = require('./routes/nuggets');
 // },err=>{
 //   console.log(err);
 // })
-var str = fs.readFileSync(path.join(__dirname,'data.json'),'utf-8');
-var arr = JSON.parse(str);
+var str = fs.readFileSync(path.join(__dirname, 'data.json'), 'utf-8');
+var arr = JSON.parse(str).slice(0, 80);
 // var count = arr.length;
 var count = 0
-function like(){
 
-  nuggets.like(arr[count]).then(res=>{
-    if(!res.error){
-      console.log('评论成功');
-    }else{
-      console.log(res.error);
-    }
-    count++;
-    if(count < arr.length){
-      like();
-    }
-  },err=>{
-    console.log(err);
-  })
+function like() {
+
+    nuggets.like(arr[count]).then(res => {
+        if (!res.error) {
+            console.log('评论成功');
+        } else {
+            console.log(res.error);
+        }
+        count++;
+        if (count < arr.length) {
+            like();
+        }
+    }, err => {
+        console.log(err);
+    })
 }
 like();
 
