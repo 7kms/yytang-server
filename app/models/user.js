@@ -19,7 +19,8 @@ const UserSchema = new Schema({
     hashed_password: { type: String, default: '' },
     email: { type: String, required: true, trim: true, unique: true },
     createTime: { type: Date, default: Date.now },
-    updateTime: { type: Date, default: Date.now }
+    updateTime: { type: Date, default: Date.now },
+    salt: { type: String, default: '' }
 });
 UserSchema.plugin(uniqueValidator);
 

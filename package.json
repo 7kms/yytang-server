@@ -23,7 +23,8 @@
     "request": "^2.79.0"
   },
   "devDependencies": {
-    "eslint": "^3.12.1",
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.19.0",
     "nodemon": "^1.11.0"
   }
 }
