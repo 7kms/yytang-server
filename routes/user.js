@@ -17,7 +17,24 @@ router.post('/login',(req,res,next)=>{
      })
 })
 
-router.post('/register',userCtrl.create)
+router.post('/register', (req, res, next) => {
+   let { email, password } = req.body;
+   userCtrl.isExists({email})
+   .then((user) => {
+       if(user){
+            res.status(200).json(resData(-1, {msg:'账号已经存在'}));
+       }else{
+           userCtrl.create({ email, password })
+           .then(obj=>{
+                res.status(200).json(obj);
+           }).catch(err=>{
+                 res.status(500).json(err);
+           })
+       }
+   }).catch((err) => {
+       res.status(500).send(err);
+   });
+})
 
 router.use(author)
 router.get('/info', (req, res, next) =>{

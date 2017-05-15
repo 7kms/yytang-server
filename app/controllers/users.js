@@ -11,9 +11,16 @@ exports.create = co.wrap(function* (req, res){
         // user.password = req.body.password;
         yield user.save();
         // var info = yield User.load({email: req.body.email});
-        res.status(200).json(resData(200, user));
+        // res.status(200).json(resData(200, user));
+        return {
+            code: 200,
+            user
+        }
     } catch (error) {
-        res.status(500).send(error);
+        return {
+            code: 500,
+            error
+        }
     }
 })
 
@@ -42,3 +49,8 @@ exports.load = co.wrap(function* (conditionObj){
         return {code: 500, error}
     }
 })
+
+exports.isExists =  function (conditionObj){
+    if(typeof conditionObj != 'object') return Promise.reject();
+    return  User.load(conditionObj);
+}
