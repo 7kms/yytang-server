@@ -25,24 +25,29 @@ exports.update = co.wrap(function*(_id, conditionObj) {
 
 exports.load = async function(conditionObj) {
     if (typeof conditionObj != 'object') {
-        return await Promise.reject();
+        await Promise.reject();
     }
     return await User.load(conditionObj);
 }
 
 exports.isExists = async function(conditionObj) {
     if (typeof conditionObj != 'object') {
-        return await Promise.reject();
+        await Promise.reject();
     }
     return await User.load(conditionObj);
 }
+
 exports.login = async function({ email, password }) {
     if (typeof email != 'string') {
-        return await Promise.reject();
+        await Promise.reject();
     }
     try {
         let user = await User.load({ email });
-        return await user.authenticate(password);
+        let flag = false;
+        if(user){
+            flag = user.authenticate(password);
+        }
+        return flag ? user : flag;
     } catch (error) {
         return await Promise.reject(error);
     }

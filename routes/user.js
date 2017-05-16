@@ -7,9 +7,9 @@ const userCtrl = require('../app/controllers/users')
 
 router.post('/login', async(req, res, next) => {
     try {
-        let result = await userCtrl.login(req.body);
-        if (result) {
-            res.status(200).json(resData(200, { msg: 'success' }))
+        let user = await userCtrl.login(req.body);
+        if (user) {
+            res.status(200).json(resData(200, { user }))
         } else {
             res.status(200).json(resData(401, { msg: 'invalidate email or password' }))
         }
@@ -22,7 +22,7 @@ router.post('/register', async(req, res, next) => {
     let { email, password } = req.body;
     let isExist = await userCtrl.isExists({ email });
     if (isExist) {
-        res.status(200).json(resData(-1, { msg: '账号已经存在' }));
+        res.status(200).json(resData(-1, { msg: 'email is exist' }));
     } else {
         try {
             let user = await userCtrl.create({ email, password });
